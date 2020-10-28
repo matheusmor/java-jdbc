@@ -1,6 +1,8 @@
 package faeterj.banco.tela;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -13,7 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import faeterj.banco.TestaBanco;
 
@@ -21,6 +27,7 @@ public class Contato extends JFrame {
 	public Contato() throws SQLException {
 		setTitle("Consultar Aluno");
 		setLocationRelativeTo(null);
+		 
 		
 		JLabel lblSearch = new JLabel ("Pesquisar");
 		JTextField txtSearch = new JTextField(30);
@@ -30,6 +37,8 @@ public class Contato extends JFrame {
 		Object[][] dados=  TestaBanco.getall();
 		JTable tabela = new JTable( dados,coluna);
 		
+		TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabela.getModel());
+		tabela.setRowSorter(rowSorter);
 		
 		
 		JScrollPane barraRolagem = new JScrollPane();
@@ -40,6 +49,20 @@ public class Contato extends JFrame {
 		setContentPane(p1);
 		p1.setLayout(bl);
 		
+		
+		btnSearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String text =txtSearch.getText(); 
+				if(text.trim().length()==0) {
+					rowSorter.setRowFilter(null);
+				}else {
+					rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				}
+				
+			}
+		});
 		JPanel p2 = new JPanel();
 		add(p2);
 		p2.add(lblSearch);
@@ -53,6 +76,15 @@ public class Contato extends JFrame {
 		
 		p3.add(barraRolagem);
 		
+		btnClose.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+				
+			}
+			
+		});
 		JPanel p4 = new JPanel(new FlowLayout(SwingConstants.RIGHT));
 		add(p4);
 		

@@ -35,12 +35,12 @@ public class TestaBanco {
 
 		Object[][] objeto = new Object[aluno.size()][numberOfColumns];
 		for (int i = 0; i < aluno.size(); i++) {
-			for (int j = 0; j < numberOfColumns - 1; j++) {
+			
 				objeto[i][0] = aluno.get(i).getMatricula();
 				objeto[i][1] = aluno.get(i).getNome();
 				objeto[i][2] = aluno.get(i).getEmail();
 				objeto[i][3] = aluno.get(i).getTelefone();
-			}
+			
 
 		}
 
