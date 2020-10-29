@@ -46,5 +46,16 @@ public class TestaBanco {
 
 		return objeto;
 	}
+	
+	public static void newAluno(String nome, String matricula, String email, String celular) throws SQLException {
+		
+		Connection conexao = Connectiondb.createConnection();
+		
+		
+		String sql =("INSERT INTO \"public\".\"aluno\" (\"nome\",\"matricula\",\"email\",\"celular\")VALUES ('"+nome+"','"+matricula+"','"+email+"','"+celular+"');");
+		PreparedStatement ps = conexao.prepareStatement(sql);
+		ps.execute();
+		
+	}
 
 }
